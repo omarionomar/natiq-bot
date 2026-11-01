@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ناطق</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  :root {
+    --bg: var(--tg-theme-bg-color, #ffffff);
+    --text: var(--tg-theme-text-color, #1a1a1a);
+    --hint: var(--tg-theme-hint-color, #707579);
+    --card: var(--tg-theme-secondary-bg-color, #f1f3f5);
+    --btn: var(--tg-theme-button-color, #2481cc);
+    --btn-text: var(--tg-theme-button-text-color, #ffffff);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 16px 14px 28px; font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); }
+  h1 { font-size: 22px; margin: 4px 0 2px; }
+  p.sub { margin: 0 0 16px; color: var(--hint); font-size: 14px; }
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  button { border: 0; border-radius: 14px; padding: 16px 8px; background: var(--card); color: var(--text); font: inherit; font-size: 15px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  button:active { background: var(--btn); color: var(--btn-text); }
+  .ic { font-size: 26px; }
+</style>
+</head>
+<body>
+  <h1>🎙 ناطق</h1>
+  <p class="sub">اختار شنو بغيتي، وغادي يتفتح ليك فالبوت</p>
+  <div class="grid" id="grid"></div>
+<script>
+  const tg = window.Telegram && window.Telegram.WebApp;
+  if (tg) { tg.ready(); tg.expand(); }
+  const items = [
+    ["🎙","نص لصوت","menu_tts"],["🔐","أدوات أمنية","menu_security"],
+    ["🛠","أدوات Kali","menu_kali"],["🎓","تعلم","menu_learn"],
+    ["🌐","ترجمة","menu_translate"],["💱","تحويل عملات","menu_currency"],
+    ["🔍","بحث","menu_search"],["📰","آخر CVE","menu_cve"],
+    ["🔠","أدوات نصية","menu_textutils"],["💡","نصيحة أمنية","tip_random"],
+    ["🏅","ملفي","menu_profile"],["🏆","الصدارة","menu_leaderboard"],
+    ["📊","إحصائيات","menu_stats"],["🏠","القائمة الرئيسية","menu_main"]
+  ];
+  const grid = document.getElementById("grid");
+  items.forEach(([icon, label, action]) => {
+    const b = document.createElement("button");
+    b.innerHTML = '<span class="ic">' + icon + "</span><span>" + label + "</span>";
+    b.addEventListener("click", () => {
+      if (tg) { tg.sendData(JSON.stringify({ action })); }
+      else { alert("حل هاد الصفحة من داخل تيليغرام"); }
+    });
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>
